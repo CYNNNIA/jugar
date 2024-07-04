@@ -1,0 +1,54 @@
+.arcoiris {
+  width: 300px;
+  position: absolute;
+  z-index: 980;
+  right: 20px;
+  bottom: 20px;
+  transition: width 0.5s;
+}
+
+.unicornio {
+  position: absolute;
+  width: 100px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.contador {
+  right: 50px;
+  bottom: 60px;
+  position: absolute;
+  z-index: 99999999;
+  color: pink;
+  font-size: 5rem;
+  border-radius: 50px;
+}
+
+.start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 150%);
+  background-color: #ff69b4;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.mensaje {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 2rem;
+  z-index: 1000;
+  text-align: center;
+}
