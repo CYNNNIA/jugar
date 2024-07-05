@@ -1,0 +1,15 @@
+/* src/pages/Snake/Snake.css */
+
+.snake {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #0f0;
+}
+
+.food {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #f00;
+}
