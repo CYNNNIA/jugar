@@ -5,7 +5,7 @@
 #board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
-  gap: 5px;
+  gap: 10px;
   margin: 20px auto;
   justify-content: center;
 }
@@ -24,7 +24,7 @@
 
 .cell.x::before {
   content: 'X';
-  color: red;
+  color: rgb(238, 15, 212);
 }
 
 .cell.o::before {
@@ -34,5 +34,6 @@
 
 button {
   padding: 10px 20px;
-  font-size: 1em;
+  font-size: 1.2em;
+  margin-right: 15px;
 }

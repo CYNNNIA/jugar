@@ -5,9 +5,8 @@ header {
   padding: 3rem 2rem;
   background-color: pink;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem;
-
-  gap: 30px;
+  margin-bottom: 5rem;
+  gap: 10px;
 }
 
 header button {

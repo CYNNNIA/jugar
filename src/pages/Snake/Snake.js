@@ -1,98 +1,195 @@
-// src/pages/Snake/Snake.js
 import './Snake.css'
+import {
+  showMainMenu,
+  loadScores
+} from '/Users/cynn/Desktop/jugar/jugar/main.js'
+
+const GRID_SIZE = 20
+let snake = [{ x: 10, y: 10 }]
+let direction = { x: 0, y: 0 }
+let apple = { x: 15, y: 15 }
+let gameActive = false
+let score = 0
+let speed = 200 // Initial speed in milliseconds
+
+const loadScore = () => {
+  const scores = loadScores()
+  return scores.snake
+}
+
+const saveScore = (newScore) => {
+  const scores = loadScores()
+  scores.snake += newScore
+  localStorage.setItem('snakeScore', scores.snake)
+}
 
 export const initSnake = () => {
   const divContent = document.querySelector('.content')
   divContent.innerHTML = ''
 
-  const snake = [{ x: 200, y: 200 }]
-  let direction = { x: 0, y: 0 }
-  let food = { x: getRandomCoordinate(), y: getRandomCoordinate() }
-  let speed = 100
-  let gameInterval
+  const container = document.createElement('div')
+  container.classList.add('container')
 
-  const createDiv = (className, x, y) => {
-    const div = document.createElement('div')
-    div.className = className
-    div.style.left = `${x}px`
-    div.style.top = `${y}px`
-    return div
+  const title = document.createElement('h1')
+  title.textContent = 'Snake'
+  container.appendChild(title)
+
+  const gameBoard = document.createElement('div')
+  gameBoard.id = 'gameBoard'
+  container.appendChild(gameBoard)
+
+  const startButton = document.createElement('button')
+  startButton.id = 'startButton'
+  startButton.textContent = 'Empezar a jugar'
+  container.appendChild(startButton)
+
+  const homeButton = document.createElement('button')
+  homeButton.textContent = 'Inicio'
+  homeButton.className = 'home-button'
+  homeButton.addEventListener('click', () => {
+    document.querySelector('.content').innerHTML = ''
+    showMainMenu()
+  })
+  container.appendChild(homeButton)
+
+  const scoreDisplay = document.createElement('p')
+  scoreDisplay.className = 'score-display'
+  scoreDisplay.textContent = `Puntuación: ${loadScore()}`
+  container.appendChild(scoreDisplay)
+
+  const controlsContainer = document.createElement('div')
+  controlsContainer.className = 'controls-container'
+
+  const upButton = document.createElement('button')
+  upButton.className = 'control-button'
+  upButton.textContent = '↑'
+  upButton.addEventListener('click', () => changeDirection({ key: 'ArrowUp' }))
+
+  const downButton = document.createElement('button')
+  downButton.className = 'control-button'
+  downButton.textContent = '↓'
+  downButton.addEventListener('click', () =>
+    changeDirection({ key: 'ArrowDown' })
+  )
+
+  const leftButton = document.createElement('button')
+  leftButton.className = 'control-button'
+  leftButton.textContent = '←'
+  leftButton.addEventListener('click', () =>
+    changeDirection({ key: 'ArrowLeft' })
+  )
+
+  const rightButton = document.createElement('button')
+  rightButton.className = 'control-button'
+  rightButton.textContent = '→'
+  rightButton.addEventListener('click', () =>
+    changeDirection({ key: 'ArrowRight' })
+  )
+
+  const controlPad = document.createElement('div')
+  controlPad.className = 'control-pad'
+  controlPad.appendChild(upButton)
+  controlPad.appendChild(leftButton)
+  controlPad.appendChild(downButton)
+  controlPad.appendChild(rightButton)
+
+  controlsContainer.appendChild(controlPad)
+  container.appendChild(controlsContainer)
+
+  divContent.appendChild(container)
+
+  document.addEventListener('keydown', changeDirection)
+  startButton.addEventListener('click', startGame)
+
+  function startGame() {
+    gameActive = true
+    snake = [{ x: 10, y: 10 }]
+    direction = { x: 0, y: 0 }
+    apple = { x: 15, y: 15 }
+    score = 0
+    speed = 200 // Reset speed at the start of the game
+    gameLoop()
   }
 
-  const drawSnake = () => {
+  function gameLoop() {
+    if (!gameActive) return
+    setTimeout(() => {
+      clearBoard()
+      moveSnake()
+      drawSnake()
+      drawApple()
+      if (checkCollision()) {
+        gameActive = false
+        saveScore(score)
+        alert(`Game Over! Puntuación: ${score}`)
+      } else {
+        gameLoop()
+      }
+    }, speed)
+  }
+
+  function clearBoard() {
+    gameBoard.innerHTML = ''
+  }
+
+  function drawSnake() {
     snake.forEach((segment) => {
-      const snakeElement = createDiv('snake', segment.x, segment.y)
-      divContent.appendChild(snakeElement)
+      const snakeElement = document.createElement('div')
+      snakeElement.style.gridRowStart = segment.y
+      snakeElement.style.gridColumnStart = segment.x
+      snakeElement.classList.add('snake')
+      gameBoard.appendChild(snakeElement)
     })
   }
 
-  const drawFood = () => {
-    const foodElement = createDiv('food', food.x, food.y)
-    divContent.appendChild(foodElement)
+  function drawApple() {
+    const appleElement = document.createElement('div')
+    appleElement.style.gridRowStart = apple.y
+    appleElement.style.gridColumnStart = apple.x
+    appleElement.classList.add('apple')
+    gameBoard.appendChild(appleElement)
   }
 
-  const getRandomCoordinate = () => {
-    return Math.floor(Math.random() * 20) * 20
-  }
-
-  const moveSnake = () => {
+  function moveSnake() {
     const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y }
     snake.unshift(head)
-
-    if (head.x === food.x && head.y === food.y) {
-      food = { x: getRandomCoordinate(), y: getRandomCoordinate() }
+    if (head.x === apple.x && head.y === apple.y) {
+      score += 1
+      speed = Math.max(50, speed - 5) // Increase speed as the snake grows, minimum speed 50ms
+      generateApple()
     } else {
       snake.pop()
     }
   }
 
-  const checkCollision = () => {
-    const head = snake[0]
-
-    if (head.x < 0 || head.x >= 400 || head.y < 0 || head.y >= 400) {
-      clearInterval(gameInterval)
-      alert('Game Over')
-      return true
+  function changeDirection(event) {
+    const key = event.key
+    if (key === 'ArrowUp' && direction.y !== 1) {
+      direction = { x: 0, y: -1 }
+    } else if (key === 'ArrowDown' && direction.y !== -1) {
+      direction = { x: 0, y: 1 }
+    } else if (key === 'ArrowLeft' && direction.x !== 1) {
+      direction = { x: -1, y: 0 }
+    } else if (key === 'ArrowRight' && direction.x !== -1) {
+      direction = { x: 1, y: 0 }
     }
+  }
 
+  function generateApple() {
+    apple = {
+      x: Math.floor(Math.random() * GRID_SIZE) + 1,
+      y: Math.floor(Math.random() * GRID_SIZE) + 1
+    }
+  }
+
+  function checkCollision() {
     for (let i = 1; i < snake.length; i++) {
-      if (snake[i].x === head.x && snake[i].y === head.y) {
-        clearInterval(gameInterval)
-        alert('Game Over')
-        return true
-      }
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true
     }
-
-    return false
+    const hitLeftWall = snake[0].x <= 0
+    const hitRightWall = snake[0].x > GRID_SIZE
+    const hitTopWall = snake[0].y <= 0
+    const hitBottomWall = snake[0].y > GRID_SIZE
+    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
   }
-
-  const gameLoop = () => {
-    moveSnake()
-
-    if (checkCollision()) return
-
-    divContent.innerHTML = ''
-    drawSnake()
-    drawFood()
-  }
-
-  const handleKeyPress = (event) => {
-    switch (event.key) {
-      case 'ArrowUp':
-        if (direction.y === 0) direction = { x: 0, y: -20 }
-        break
-      case 'ArrowDown':
-        if (direction.y === 0) direction = { x: 0, y: 20 }
-        break
-      case 'ArrowLeft':
-        if (direction.x === 0) direction = { x: -20, y: 0 }
-        break
-      case 'ArrowRight':
-        if (direction.x === 0) direction = { x: 20, y: 0 }
-        break
-    }
-  }
-
-  document.addEventListener('keydown', handleKeyPress)
-  gameInterval = setInterval(gameLoop, speed)
 }

@@ -1,4 +1,8 @@
 import './TresEnRaya.css'
+import {
+  showMainMenu,
+  loadScores
+} from '/Users/cynn/Desktop/jugar/jugar/main.js'
 
 export const initTres = () => {
   const divContent = document.querySelector('.content')
@@ -19,6 +23,27 @@ export const initTres = () => {
   restartButton.id = 'restartButton'
   restartButton.textContent = 'Reiniciar Juego'
   container.appendChild(restartButton)
+
+  const homeButton = document.createElement('button')
+  homeButton.textContent = 'Inicio'
+  homeButton.className = 'home-button'
+  homeButton.addEventListener('click', () => {
+    document.querySelector('.content').innerHTML = ''
+    showMainMenu()
+  })
+  container.appendChild(homeButton)
+
+  const scores = loadScores()
+  const scoreDisplayX = document.createElement('p')
+  scoreDisplayX.className = 'score-display'
+  scoreDisplayX.textContent = `Puntuación X: ${scores.tresEnRayaX}`
+
+  const scoreDisplayO = document.createElement('p')
+  scoreDisplayO.className = 'score-display'
+  scoreDisplayO.textContent = `Puntuación O: ${scores.tresEnRayaO}`
+
+  container.appendChild(scoreDisplayX)
+  container.appendChild(scoreDisplayO)
 
   divContent.appendChild(container)
 
@@ -69,6 +94,7 @@ export const initTres = () => {
       alert('Empate!')
     } else {
       alert(`${oTurn ? "O's" : "X's"} gana!`)
+      updateScore(oTurn ? 'o' : 'x')
     }
     startGame()
   }
@@ -95,6 +121,19 @@ export const initTres = () => {
         return cellElements[index].classList.contains(currentClass)
       })
     })
+  }
+
+  function updateScore(winner) {
+    const scores = loadScores()
+    if (winner === 'x') {
+      scores.tresEnRayaX += 1
+      localStorage.setItem('tresEnRayaXScore', scores.tresEnRayaX)
+      scoreDisplayX.textContent = `Puntuación X: ${scores.tresEnRayaX}`
+    } else {
+      scores.tresEnRayaO += 1
+      localStorage.setItem('tresEnRayaOScore', scores.tresEnRayaO)
+      scoreDisplayO.textContent = `Puntuación O: ${scores.tresEnRayaO}`
+    }
   }
 
   restartButton.addEventListener('click', startGame)

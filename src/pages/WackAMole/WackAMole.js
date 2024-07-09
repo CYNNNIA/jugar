@@ -1,4 +1,8 @@
 import './WackAMole.css'
+import {
+  showMainMenu,
+  loadScores
+} from '/Users/cynn/Desktop/jugar/jugar/main.js'
 
 let COUNT = 0
 let totalUnicorns = 0
@@ -11,8 +15,18 @@ const unicornImages = [
   './assets/WackAMole/unicornio3.png',
   './assets/WackAMole/unicornio4.png',
   './assets/WackAMole/unicornio5.png'
-  // Añade más rutas de imágenes de unicornios si tienes más
 ]
+
+const loadScore = () => {
+  const scores = loadScores()
+  return scores.wackAMole
+}
+
+const saveScore = (score) => {
+  const scores = loadScores()
+  scores.wackAMole += score
+  localStorage.setItem('wackAMoleScore', scores.wackAMole)
+}
 
 export const initMole = () => {
   const divContent = document.querySelector('.content')
@@ -31,6 +45,11 @@ export const initMole = () => {
   startButton.className = 'start-button'
   startButton.addEventListener('click', startGame)
 
+  const scoreDisplay = document.createElement('p')
+  scoreDisplay.className = 'score-display'
+  scoreDisplay.textContent = `Puntuación: ${loadScore()}`
+
+  divContent.appendChild(scoreDisplay)
   divContent.appendChild(textoContador)
   divContent.appendChild(arcoiris)
   divContent.appendChild(startButton)
@@ -81,11 +100,11 @@ const createUnicornio = () => {
 
   const imgUnicornio = document.createElement('img')
   imgUnicornio.className = 'unicornio'
-  imgUnicornio.style.position = 'absolute' // Asegurar posición absoluta
+  imgUnicornio.style.position = 'absolute'
   imgUnicornio.style.left = `${randomLeft}px`
   imgUnicornio.style.top = `${randomTop}px`
   imgUnicornio.style.transform = `rotate(${Math.random() * 360}deg)`
-  imgUnicornio.style.zIndex = 1 // Asegurarse de que los unicornios estén detrás del arco iris
+  imgUnicornio.style.zIndex = 1
 
   const randomImage =
     unicornImages[Math.floor(Math.random() * unicornImages.length)]
@@ -110,20 +129,17 @@ const recogerUnicornio = (e) => {
   COUNT++
   repintarTexto(COUNT)
 
-  // Mover el unicornio detrás del arco iris
-  e.target.style.zIndex = 0 // Poner el unicornio detrás del arco iris
+  e.target.style.zIndex = 0
   e.target.style.left = `${
     arcoirisRect.left + arcoirisRect.width / 2 - e.target.width / 2
   }px`
   e.target.style.top = `${
     arcoirisRect.top + arcoirisRect.height / 2 - e.target.height / 2
   }px`
-  e.target.style.transform = 'scale(0)' // Hacer el unicornio invisible al reducir su tamaño
+  e.target.style.transform = 'scale(0)'
 
-  // Aumentar el tamaño del arco iris
   arcoiris.style.width = `${arcoirisRect.width + 20}px`
 
-  // Reducir la velocidad aumentando la frecuencia de aparición de unicornios
   speed = Math.max(1000, speed - 100)
 
   createUnicornio()
@@ -136,6 +152,7 @@ const repintarTexto = (cont) => {
 
 const mostrarMensaje = (mensaje) => {
   gameActive = false
+  saveScore(COUNT)
   const divContent = document.querySelector('.content')
   const mensajeElement = document.createElement('div')
   mensajeElement.className = 'mensaje'
@@ -146,8 +163,20 @@ const mostrarMensaje = (mensaje) => {
   startButton.className = 'start-button'
   startButton.addEventListener('click', startGame)
 
-  mensajeElement.appendChild(startButton)
-  divContent.appendChild(mensajeElement)
-}
+  const homeButton = document.createElement('button')
+  homeButton.textContent = 'Inicio'
+  homeButton.className = 'home-button'
+  homeButton.addEventListener('click', () => {
+    document.querySelector('.content').innerHTML = ''
+    showMainMenu()
+  })
 
-document.addEventListener('DOMContentLoaded', initMole) // Iniciar el juego cuando el contenido del documento esté cargado
+  mensajeElement.appendChild(startButton)
+  mensajeElement.appendChild(homeButton)
+  divContent.appendChild(mensajeElement)
+
+  const scoreDisplay = document.createElement('p')
+  scoreDisplay.className = 'score-display'
+  scoreDisplay.textContent = `Puntuación: ${loadScore()}`
+  divContent.appendChild(scoreDisplay)
+}
