@@ -47,6 +47,18 @@ export const initTres = () => {
 
   divContent.appendChild(container)
 
+  // Modal setup
+  const modal = document.createElement('div')
+  modal.id = 'game-over-modal'
+  modal.classList.add('modal')
+  modal.innerHTML = `
+    <div class="modal-content">
+      <p id="game-over-message"></p>
+      <button id="modal-restart-button" class="modal-button">Volver a jugar</button>
+    </div>
+  `
+  divContent.appendChild(modal)
+
   const X_CLASS = 'x'
   const O_CLASS = 'o'
   const WINNING_COMBINATIONS = [
@@ -91,12 +103,12 @@ export const initTres = () => {
 
   function endGame(draw) {
     if (draw) {
-      alert('Empate!')
+      mostrarMensaje('¡Empate!')
     } else {
-      alert(`${oTurn ? "O's" : "X's"} gana!`)
+      const winner = oTurn ? 'O' : 'X'
+      mostrarMensaje(`¡${winner} gana!`)
       updateScore(oTurn ? 'o' : 'x')
     }
-    startGame()
   }
 
   function isDraw() {
@@ -133,6 +145,27 @@ export const initTres = () => {
       scores.tresEnRayaO += 1
       localStorage.setItem('tresEnRayaOScore', scores.tresEnRayaO)
       scoreDisplayO.textContent = `Puntuación O: ${scores.tresEnRayaO}`
+    }
+  }
+
+  function mostrarMensaje(mensaje) {
+    const modal = document.getElementById('game-over-modal')
+    const message = document.getElementById('game-over-message')
+    const restartButton = document.getElementById('modal-restart-button')
+
+    message.textContent = mensaje
+    modal.style.display = 'flex'
+
+    restartButton.onclick = function () {
+      modal.style.display = 'none'
+      startGame()
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none'
+        startGame()
+      }
     }
   }
 

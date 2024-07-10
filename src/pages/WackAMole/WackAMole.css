@@ -52,3 +52,101 @@
   z-index: 1000;
   text-align: center;
 }
+
+.home-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  margin-left: 30px;
+  border: 2px solid #77e8e8;
+  background-color: #f7df1e;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+  .arcoiris {
+    width: 250px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .unicornio {
+    width: 80px;
+  }
+
+  .contador {
+    right: 40px;
+    bottom: 50px;
+    font-size: 4rem;
+  }
+
+  .start-button {
+    padding: 8px 16px;
+    font-size: 1.25rem;
+  }
+
+  .mensaje {
+    padding: 15px;
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .arcoiris {
+    width: 200px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .unicornio {
+    width: 60px;
+  }
+
+  .contador {
+    right: 30px;
+    bottom: 40px;
+    font-size: 3rem;
+  }
+
+  .start-button {
+    padding: 6px 12px;
+    font-size: 1rem;
+  }
+
+  .mensaje {
+    padding: 10px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .arcoiris {
+    width: 150px;
+    right: 5px;
+    bottom: 5px;
+  }
+
+  .unicornio {
+    width: 50px;
+  }
+
+  .contador {
+    right: 20px;
+    bottom: 30px;
+    font-size: 2rem;
+  }
+
+  .start-button {
+    padding: 4px 8px;
+    font-size: 0.875rem;
+  }
+
+  .mensaje {
+    padding: 8px;
+    font-size: 1.25rem;
+  }
+}

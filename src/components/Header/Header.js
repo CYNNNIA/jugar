@@ -16,20 +16,14 @@ export const Header = (divApp) => {
   }
 
   const header = document.createElement('header')
-  const buttonHome = document.createElement('button')
   const buttonSnake = document.createElement('button')
   const buttonTres = document.createElement('button')
   const buttonWack = document.createElement('button')
 
-  buttonHome.textContent = 'Inicio'
   buttonSnake.textContent = 'Snake'
   buttonTres.textContent = 'Tres en Raya'
   buttonWack.textContent = 'Whack a Mole'
 
-  buttonHome.addEventListener('click', () => {
-    document.querySelector('.content').innerHTML = ''
-    showMainMenu()
-  })
   buttonSnake.addEventListener('click', () => {
     document.querySelector('.content').innerHTML = ''
     initSnake()
@@ -43,7 +37,6 @@ export const Header = (divApp) => {
     initMole()
   })
 
-  header.append(buttonHome)
   header.append(buttonSnake)
   header.append(buttonTres)
   header.append(buttonWack)

@@ -1,23 +1,65 @@
 header {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  padding: 3rem 2rem;
+  padding: 1rem; /* Reducimos el padding */
   background-color: pink;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 5rem;
   gap: 10px;
+  position: fixed; /* Hacemos que el header sea fijo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: auto; /* Permitimos que la altura se ajuste automáticamente */
 }
 
 header button {
-  padding: 1.5rem 1rem;
+  padding: 0.5rem; /* Reducimos el padding */
   border: 3px solid #77e8e8;
-  border-radius: 1.5rem;
+  border-radius: 1rem; /* Reducimos el border-radius */
   background-color: #f7df1e;
   color: #242424;
-  font-size: 20px;
+  font-size: 16px; /* Reducimos el tamaño de la fuente */
   cursor: pointer;
   transition: background-color 0.25s;
-  padding: 10px 20px;
-  width: 200px;
+  width: 140px; /* Reducimos el ancho */
+}
+
+/* Responsive Design for Header */
+
+@media (max-width: 1024px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  header button {
+    width: 120px;
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  header button {
+    width: 100px;
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  header button {
+    width: 80px;
+    padding: 0.25rem;
+    font-size: 10px;
+  }
 }

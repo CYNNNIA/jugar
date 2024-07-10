@@ -5,7 +5,11 @@ body {
   background-color: #77e8e8;
   font-family: 'Pixelify Sans', sans-serif;
   margin: 0;
-  padding-top: 8rem;
+  padding-top: 5rem; /* Ajustado para que el contenido no quede oculto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .main-title {
@@ -18,37 +22,7 @@ body {
 .content {
   text-align: center;
   padding: 6rem;
-}
-
-header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem 2rem;
-  background-color: pink;
-  box-shadow: 0 2px 4px #0000001a;
-  gap: 30px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-header button {
-  padding: 1.5rem 1rem;
-  border: 3px solid #77e8e8;
-  border-radius: 1.5rem;
-  background-color: #f7df1e;
-  color: #242424;
-  font-size: 20px;
-  cursor: pointer;
-  transition: background-color 0.25s;
-  width: 200px;
-}
-
-header button:hover {
-  background-color: #ff69b4;
+  margin-top: 2rem; /* Añadimos margen superior para que el contenido no quede oculto */
 }
 
 .score-display {
@@ -57,17 +31,61 @@ header button:hover {
   margin-top: 1rem;
 }
 
-.home-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1em;
-  border: 2px solid #77e8e8;
-  background-color: #f7df1e;
-  border-radius: 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.25s;
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+  body {
+    padding-top: 7rem; /* Ajustamos el padding-top del body */
+  }
+
+  .main-title {
+    font-size: 2.5rem;
+  }
+
+  .content {
+    padding: 1rem;
+    margin-top: 4rem; /* Ajustamos el margen superior */
+  }
+
+  .score-display {
+    font-size: 1.25rem;
+  }
 }
 
-.home-button:hover {
-  background-color: #ff69b4;
+@media (max-width: 768px) {
+  body {
+    padding-top: 8rem; /* Ajustamos el padding-top del body */
+  }
+
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .content {
+    padding: 1rem;
+    margin-top: 1rem; /* Ajustamos el margen superior */
+  }
+
+  .score-display {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 9rem; /* Ajustamos el padding-top del body */
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    padding: 0.5rem;
+    margin-top: 0.1rem; /* Ajustamos el margen superior */
+  }
+
+  .score-display {
+    font-size: 0.875rem;
+  }
 }

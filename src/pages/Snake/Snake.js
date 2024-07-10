@@ -98,6 +98,19 @@ export const initSnake = () => {
 
   divContent.appendChild(container)
 
+  // Modal setup
+  const modal = document.createElement('div')
+  modal.id = 'game-over-modal'
+  modal.classList.add('modal')
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <p id="game-over-message"></p>
+      <button id="modal-restart-button" class="modal-button">Reiniciar Juego</button>
+    </div>
+  `
+  divContent.appendChild(modal)
+
   document.addEventListener('keydown', changeDirection)
   startButton.addEventListener('click', startGame)
 
@@ -121,7 +134,7 @@ export const initSnake = () => {
       if (checkCollision()) {
         gameActive = false
         saveScore(score)
-        alert(`Game Over! Puntuación: ${score}`)
+        mostrarMensaje(`Game Over! Puntuación: ${score}`)
       } else {
         gameLoop()
       }
@@ -155,7 +168,7 @@ export const initSnake = () => {
     snake.unshift(head)
     if (head.x === apple.x && head.y === apple.y) {
       score += 1
-      speed = Math.max(50, speed - 5) // Increase speed as the snake grows, minimum speed 50ms
+      speed = Math.max(50, speed - 20) // Increase speed as the snake grows, minimum speed 50ms
       generateApple()
     } else {
       snake.pop()
@@ -192,4 +205,34 @@ export const initSnake = () => {
     const hitBottomWall = snake[0].y > GRID_SIZE
     return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
   }
+
+  function mostrarMensaje(mensaje) {
+    const modal = document.getElementById('game-over-modal')
+    const message = document.getElementById('game-over-message')
+    const restartButton = document.getElementById('modal-restart-button')
+    const closeButton = document.querySelector('.close-button')
+
+    message.textContent = mensaje
+    modal.style.display = 'flex'
+
+    closeButton.onclick = function () {
+      modal.style.display = 'none'
+      startGame()
+    }
+
+    restartButton.onclick = function () {
+      modal.style.display = 'none'
+      startGame()
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none'
+        startGame()
+      }
+    }
+  }
 }
+
+// Inicia el juego cuando se carga el módulo
+document.addEventListener('DOMContentLoaded', initSnake)
