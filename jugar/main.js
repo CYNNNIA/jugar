@@ -40,4 +40,6 @@ export const showMainMenu = () => {
   }
 }
 
-document.addEventListener('DOMContentLoaded', showMainMenu)
+document.addEventListener('DOMContentLoaded', () => {
+  showMainMenu()
+})

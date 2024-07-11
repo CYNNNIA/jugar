@@ -47,7 +47,6 @@ export const initTres = () => {
 
   divContent.appendChild(container)
 
-  // Modal setup
   const modal = document.createElement('div')
   modal.id = 'game-over-modal'
   modal.classList.add('modal')
@@ -103,10 +102,9 @@ export const initTres = () => {
 
   function endGame(draw) {
     if (draw) {
-      mostrarMensaje('¡Empate!')
+      showModal('¡Empate!')
     } else {
-      const winner = oTurn ? 'O' : 'X'
-      mostrarMensaje(`¡${winner} gana!`)
+      showModal(`¡${oTurn ? 'O' : 'X'} gana!`)
       updateScore(oTurn ? 'o' : 'x')
     }
   }
@@ -148,12 +146,12 @@ export const initTres = () => {
     }
   }
 
-  function mostrarMensaje(mensaje) {
+  function showModal(message) {
     const modal = document.getElementById('game-over-modal')
-    const message = document.getElementById('game-over-message')
+    const messageElement = document.getElementById('game-over-message')
     const restartButton = document.getElementById('modal-restart-button')
 
-    message.textContent = mensaje
+    messageElement.textContent = message
     modal.style.display = 'flex'
 
     restartButton.onclick = function () {

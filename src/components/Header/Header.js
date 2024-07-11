@@ -1,8 +1,6 @@
 import { initSnake } from '../../pages/Snake/Snake'
 import { initTres } from '../../pages/TresEnRaya/TresEnRaya'
 import { initMole } from '../../pages/WackAMole/WackAMole'
-import { showMainMenu } from '/Users/cynn/Desktop/jugar/jugar/main.js'
-
 import './Header.css'
 
 export const Header = (divApp) => {
@@ -11,9 +9,7 @@ export const Header = (divApp) => {
     return
   }
 
-  if (document.querySelector('header')) {
-    return
-  }
+  if (document.querySelector('header')) return // Evitar duplicados
 
   const header = document.createElement('header')
   const buttonSnake = document.createElement('button')
