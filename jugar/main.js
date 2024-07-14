@@ -1,6 +1,5 @@
-import { Header } from '../src/components/Header/Header'
+import { Header } from './src/components/Header/Header'
 import './style.css'
-
 const divApp = document.querySelector('#app')
 
 export const loadScores = () => {
@@ -17,7 +16,7 @@ export const showMainMenu = () => {
   divContent.className = 'content'
 
   const title = document.createElement('h1')
-  title.textContent = 'Los juegos de Cynn'
+  title.textContent = 'Let´s Play!'
   title.className = 'main-title'
 
   const scores = loadScores()
@@ -32,7 +31,7 @@ export const showMainMenu = () => {
 
   divContent.appendChild(title)
   divContent.appendChild(scoreDisplay)
-  divApp.innerHTML = '' // Clear existing content
+  divApp.innerHTML = ''
   divApp.appendChild(divContent)
 
   if (!document.querySelector('header')) {

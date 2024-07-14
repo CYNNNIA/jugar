@@ -1,8 +1,5 @@
 import './TresEnRaya.css'
-import {
-  showMainMenu,
-  loadScores
-} from '/Users/cynn/Desktop/jugar/jugar/main.js'
+import { showMainMenu, loadScores } from '../../../main.js'
 
 export const initTres = () => {
   const divContent = document.querySelector('.content')
@@ -172,5 +169,4 @@ export const initTres = () => {
   startGame()
 }
 
-// Inicia el juego cuando se carga el módulo
 document.addEventListener('DOMContentLoaded', initTres)

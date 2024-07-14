@@ -2,31 +2,29 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem; /* Reducimos el padding */
+  padding: 1rem;
   background-color: pink;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   gap: 10px;
-  position: fixed; /* Hacemos que el header sea fijo */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: auto; /* Permitimos que la altura se ajuste automáticamente */
+  height: auto;
 }
 
 header button {
-  padding: 0.5rem; /* Reducimos el padding */
+  padding: 0.5rem;
   border: 3px solid #77e8e8;
-  border-radius: 1rem; /* Reducimos el border-radius */
+  border-radius: 1rem;
   background-color: #f7df1e;
   color: #242424;
-  font-size: 16px; /* Reducimos el tamaño de la fuente */
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.25s;
-  width: 140px; /* Reducimos el ancho */
+  width: 140px;
 }
-
-/* Responsive Design for Header */
 
 @media (max-width: 1024px) {
   header {

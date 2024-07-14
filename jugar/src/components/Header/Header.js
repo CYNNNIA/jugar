@@ -9,7 +9,7 @@ export const Header = (divApp) => {
     return
   }
 
-  if (document.querySelector('header')) return // Evitar duplicados
+  if (document.querySelector('header')) return
 
   const header = document.createElement('header')
   const buttonSnake = document.createElement('button')
@@ -18,7 +18,7 @@ export const Header = (divApp) => {
 
   buttonSnake.textContent = 'Snake'
   buttonTres.textContent = 'Tres en Raya'
-  buttonWack.textContent = 'Whack a Mole'
+  buttonWack.textContent = 'Rainbow'
 
   buttonSnake.addEventListener('click', () => {
     document.querySelector('.content').innerHTML = ''

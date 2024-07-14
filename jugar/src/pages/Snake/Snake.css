@@ -1,6 +1,9 @@
-/* General Styles */
 .container {
   text-align: center;
+}
+
+h1 {
+  font-size: 2vw;
 }
 
 #gameBoard {
@@ -9,12 +12,15 @@
   grid-template-columns: repeat(20, 1fr);
   gap: 1px;
   background-color: #000;
-  width: 150vw;
-  height: 150vw;
-  max-width: 700px;
-  max-height: 700px;
-  margin: 20px auto;
+  width: 40vw;
+  height: 35vw;
+  margin: 5px auto;
   position: relative;
+}
+
+#startButton {
+  height: 4vh;
+  font-size: 2vh;
 }
 
 .snake {
@@ -25,25 +31,20 @@
   background-color: #ff0000;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  margin-top: 20px;
+.homebutton:hover {
+  background-color: #ff69b4;
 }
 
-.home-button {
+.homebutton {
   margin-top: 20px;
   padding: 10px 20px;
-  font-size: 1em;
+  font-size: 2vh;
+  margin-left: 30px;
   border: 2px solid #77e8e8;
   background-color: #f7df1e;
   border-radius: 1.5rem;
   cursor: pointer;
   transition: background-color 0.25s;
-}
-
-.home-button:hover {
-  background-color: #ff69b4;
 }
 
 .score-display {
@@ -53,13 +54,39 @@ button {
 }
 
 .controls-container {
-  display: flex;
+  display: none;
   justify-content: center;
   margin-top: 20px;
 }
 
 .control-pad {
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 25px 40px;
+  justify-items: center;
+}
+
+.control-button {
+  width: 80px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.control-pad > button:nth-child(1) {
+  grid-column: 1 / span 2;
+}
+
+.control-pad > button:nth-child(2) {
+  grid-column: 1;
+}
+
+.control-pad > button:nth-child(3) {
+  grid-column: 2;
+}
+
+.control-pad > button:nth-child(4) {
+  grid-column: 1 / span 2;
 }
 
 .control-button:hover {
@@ -67,23 +94,8 @@ button {
 }
 
 @media (max-width: 1200px) {
-  .control-button {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
   .controls-container {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .control-pad {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 5px;
   }
 
   #gameBoard {
@@ -106,17 +118,6 @@ button {
   margin-top: 20px;
 }
 
-.home-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1em;
-  border: 2px solid #77e8e8;
-  background-color: #f7df1e;
-  border-radius: 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.25s;
-}
-
 .home-button:hover {
   background-color: #ff69b4;
 }
@@ -127,17 +128,13 @@ button {
   margin-top: 1rem;
 }
 
-/* Message Modal Styles */
 .modal {
   display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
+  overflow: none;
   background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
@@ -146,10 +143,9 @@ button {
 .modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 500px;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -185,7 +181,6 @@ button {
   background-color: #ff1493;
 }
 
-/* Responsive Design for Modal */
 @media (max-width: 768px) {
   .modal-content {
     width: 90%;
@@ -203,5 +198,47 @@ button {
 
   .modal-button {
     font-size: 0.75rem;
+  }
+
+  #gameBoard {
+    width: 70vw;
+    height: 50vw;
+  }
+
+  #app {
+    padding: 0;
+    margin-top: -180px;
+  }
+  .control-button {
+    width: 80px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .control-pad {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 1px 1px;
+    justify-items: center;
+  }
+  .controls-container {
+    display: block;
+    justify-content: center;
+    margin-top: 0px;
+    height: 60px;
+  }
+
+  .homebutton {
+    margin-top: 0px;
+    padding: 5px 10px;
+    font-size: 2vh;
+    margin-left: 3px;
+  }
+
+  #startButton {
+    height: 20px;
+    font-size: 1.5vh;
+    margin-top: 0px;
   }
 }

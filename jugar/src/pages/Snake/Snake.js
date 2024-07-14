@@ -1,8 +1,5 @@
 import './Snake.css'
-import {
-  showMainMenu,
-  loadScores
-} from '/Users/cynn/Desktop/jugar/jugar/main.js'
+import { showMainMenu, loadScores } from '../../../main.js'
 
 const GRID_SIZE = 20
 let snake = [{ x: 10, y: 10 }]
@@ -10,7 +7,7 @@ let direction = { x: 0, y: 0 }
 let apple = { x: 15, y: 15 }
 let gameActive = false
 let score = 0
-let speed = 200 // Initial speed in milliseconds
+let speed = 200
 
 const loadScore = () => {
   const scores = loadScores()
@@ -45,7 +42,7 @@ export const initSnake = () => {
 
   const homeButton = document.createElement('button')
   homeButton.textContent = 'Inicio'
-  homeButton.className = 'home-button'
+  homeButton.className = 'homebutton'
   homeButton.addEventListener('click', () => {
     document.querySelector('.content').innerHTML = ''
     showMainMenu()
@@ -65,13 +62,6 @@ export const initSnake = () => {
   upButton.textContent = '↑'
   upButton.addEventListener('click', () => changeDirection({ key: 'ArrowUp' }))
 
-  const downButton = document.createElement('button')
-  downButton.className = 'control-button'
-  downButton.textContent = '↓'
-  downButton.addEventListener('click', () =>
-    changeDirection({ key: 'ArrowDown' })
-  )
-
   const leftButton = document.createElement('button')
   leftButton.className = 'control-button'
   leftButton.textContent = '←'
@@ -86,19 +76,25 @@ export const initSnake = () => {
     changeDirection({ key: 'ArrowRight' })
   )
 
+  const downButton = document.createElement('button')
+  downButton.className = 'control-button'
+  downButton.textContent = '↓'
+  downButton.addEventListener('click', () =>
+    changeDirection({ key: 'ArrowDown' })
+  )
+
   const controlPad = document.createElement('div')
   controlPad.className = 'control-pad'
   controlPad.appendChild(upButton)
   controlPad.appendChild(leftButton)
-  controlPad.appendChild(downButton)
   controlPad.appendChild(rightButton)
+  controlPad.appendChild(downButton)
 
   controlsContainer.appendChild(controlPad)
   container.appendChild(controlsContainer)
 
   divContent.appendChild(container)
 
-  // Modal setup
   const modal = document.createElement('div')
   modal.id = 'game-over-modal'
   modal.classList.add('modal')
@@ -120,7 +116,7 @@ export const initSnake = () => {
     direction = { x: 0, y: 0 }
     apple = { x: 15, y: 15 }
     score = 0
-    speed = 200 // Reset speed at the start of the game
+    speed = 200
     gameLoop()
   }
 
@@ -168,7 +164,7 @@ export const initSnake = () => {
     snake.unshift(head)
     if (head.x === apple.x && head.y === apple.y) {
       score += 1
-      speed = Math.max(50, speed - 20) // Increase speed as the snake grows, minimum speed 50ms
+      speed = Math.max(50, speed - 20)
       generateApple()
     } else {
       snake.pop()
@@ -234,5 +230,4 @@ export const initSnake = () => {
   }
 }
 
-// Inicia el juego cuando se carga el módulo
 document.addEventListener('DOMContentLoaded', initSnake)

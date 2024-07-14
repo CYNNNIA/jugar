@@ -1,8 +1,5 @@
 import './WackAMole.css'
-import {
-  showMainMenu,
-  loadScores
-} from '/Users/cynn/Desktop/jugar/jugar/main.js'
+import { showMainMenu, loadScores } from '../../../main.js'
 
 let COUNT = 0
 let totalUnicorns = 0
@@ -10,7 +7,7 @@ let speed = 3000
 let gameActive = false
 
 const unicornImages = [
-  './assets/WackAMole/unicornio1.png',
+  '/assets/WackAMole/unicornio1.png',
   './assets/WackAMole/unicornio2.png',
   './assets/WackAMole/unicornio3.png',
   './assets/WackAMole/unicornio4.png',
@@ -80,7 +77,7 @@ const startGame = () => {
 const createUnicornio = () => {
   if (!gameActive) return
 
-  if (COUNT >= 10) {
+  if (COUNT >= 15) {
     mostrarMensaje('¡Felicidades has llenado tu arcoiris!')
     return
   }
@@ -94,9 +91,31 @@ const createUnicornio = () => {
 
   totalUnicorns++
   const divContent = document.querySelector('.content')
+  const arcoiris = document.querySelector('.arcoiris')
+  const arcoirisRect = arcoiris.getBoundingClientRect()
+  const headerHeight = document.querySelector('header')?.offsetHeight || 0
 
-  let randomLeft = Math.random() * (window.innerWidth - 100)
-  let randomTop = Math.random() * (window.innerHeight - 200)
+  const marginPercent = 0.2
+
+  let effectiveWidth = window.innerWidth * (1 - 2 * marginPercent)
+  let effectiveHeight =
+    (window.innerHeight - headerHeight - arcoirisRect.height) *
+    (1 - 2 * marginPercent)
+
+  let marginWidth = window.innerWidth * marginPercent
+  let marginHeight =
+    headerHeight +
+    (window.innerHeight - headerHeight - arcoirisRect.height) * marginPercent
+
+  let randomLeft = marginWidth + Math.random() * effectiveWidth
+
+  let randomTop =
+    marginHeight +
+    Math.random() * (window.innerHeight - marginHeight - arcoirisRect.height)
+
+  if (randomTop + 100 > arcoirisRect.top) {
+    randomTop = arcoirisRect.top - 100
+  }
 
   const imgUnicornio = document.createElement('img')
   imgUnicornio.className = 'unicornio'
@@ -110,6 +129,8 @@ const createUnicornio = () => {
     unicornImages[Math.floor(Math.random() * unicornImages.length)]
   imgUnicornio.src = randomImage
 
+  imgUnicornio.setAttribute('draggable', 'false')
+  imgUnicornio.addEventListener('mousedown', (e) => e.preventDefault())
   imgUnicornio.addEventListener('click', (e) => recogerUnicornio(e))
 
   divContent.append(imgUnicornio)
@@ -137,6 +158,7 @@ const recogerUnicornio = (e) => {
     arcoirisRect.top + arcoirisRect.height / 2 - e.target.height / 2
   }px`
   e.target.style.transform = 'scale(0)'
+  e.target.style.pointerEvents = 'none'
 
   arcoiris.style.width = `${arcoirisRect.width + 20}px`
 

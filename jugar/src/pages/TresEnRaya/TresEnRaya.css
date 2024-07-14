@@ -1,4 +1,3 @@
-/* General Styles */
 .container {
   text-align: center;
 }
@@ -22,15 +21,21 @@
   font-size: 2em;
   cursor: pointer;
 }
+#restartButton {
+  height: 4vh;
+  font-size: 2vh;
+}
 
 .cell.x::before {
   content: 'X';
   color: rgb(238, 15, 212);
+  font-size: 15vh;
 }
 
 .cell.o::before {
   content: 'O';
   color: blue;
+  font-size: 15vh;
 }
 
 button {
@@ -60,7 +65,6 @@ button {
   margin-top: 1rem;
 }
 
-/* Message Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -116,7 +120,6 @@ button {
   background-color: #ff1493;
 }
 
-/* Responsive Design for Modal */
 @media (max-width: 768px) {
   .modal {
     width: 90%;
@@ -134,5 +137,12 @@ button {
 
   .modal-button {
     font-size: 0.75rem;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    justify-content: center;
   }
 }
